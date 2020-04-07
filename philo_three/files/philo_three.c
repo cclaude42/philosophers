@@ -6,23 +6,24 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 10:23:07 by cclaude           #+#    #+#             */
-/*   Updated: 2020/04/07 13:37:05 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/04/07 17:47:38 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_three.h"
 
-void philosopher(t_nb nb, t_t t)
+void philosopher(t_nb nb, t_t t, int which)
 {
-    int a;
-    (void)t;
-    sem_getvalue(nb.forks, &a);
-    printf("Semaphore (before) : %d\n", a);
-    sem_wait(nb.forks);
-    usleep(2000000);
-    sem_post(nb.forks);
-    sem_getvalue(nb.forks, &a);
-    printf("Semaphore (after) : %d\n", a);
+    while (1)
+    {
+        sem_wait(nb.forks);
+        printf("%d is eating\n", which);
+        usleep(t.eat * 1000);
+        sem_post(nb.forks);
+        printf("%d is sleeping\n", which);
+        usleep(t.sleep * 1000);
+        printf("%d is thinking\n", which);
+    }
 }
 
 void philo_three(t_nb nb, t_t t)
@@ -34,7 +35,7 @@ void philo_three(t_nb nb, t_t t)
     {
         if (fork() == 0)
         {
-            philosopher(nb, t);
+            philosopher(nb, t, i + 1);
             i = nb.phi;
         }
         i++;
