@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 10:24:11 by cclaude           #+#    #+#             */
-/*   Updated: 2020/04/07 11:51:21 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/04/07 13:20:19 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,17 @@
 // # include <stdlib.h>
 // # include <fcntl.h>
 // # include <string.h>
+# include <semaphore.h>
+# include <sys/wait.h>
+# include <fcntl.h>
 # include <unistd.h>
 # include <stdio.h>
 
 typedef struct	s_nb
 {
-	int phi;
-    int eat;
+	int 	phi;
+    int 	eat;
+	sem_t	*forks;
 }				t_nb;
 
 typedef struct	s_t

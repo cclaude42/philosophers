@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 10:23:07 by cclaude           #+#    #+#             */
-/*   Updated: 2020/04/07 12:16:22 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/04/07 13:37:05 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,15 @@
 
 void philosopher(t_nb nb, t_t t)
 {
-    ;
+    int a;
+    (void)t;
+    sem_getvalue(nb.forks, &a);
+    printf("Semaphore (before) : %d\n", a);
+    sem_wait(nb.forks);
+    usleep(2000000);
+    sem_post(nb.forks);
+    sem_getvalue(nb.forks, &a);
+    printf("Semaphore (after) : %d\n", a);
 }
 
 void philo_three(t_nb nb, t_t t)
@@ -31,6 +39,8 @@ void philo_three(t_nb nb, t_t t)
         }
         i++;
     }
+    while ((waitpid(-1, NULL, 0)) != -1)
+        ;
 }
 
 int main(int ac, char **av)
@@ -45,6 +55,9 @@ int main(int ac, char **av)
     t.eat = ft_atoi(av[3]);
     t.sleep = ft_atoi(av[4]);
     nb.eat = (ac == 6) ? ft_atoi(av[5]): -1;
+    nb.forks = sem_open("forks", O_CREAT, S_IRWXU, (unsigned int)(nb.phi / 2));
     philo_three(nb, t);
+    sem_close(nb.forks);
+    sem_unlink("forks");
     return (0);
 }
