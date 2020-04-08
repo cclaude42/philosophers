@@ -40,7 +40,7 @@ fclean: clean
 re: fclean all
 
 test: re
-	./$(NAME) 2 10000 2000 3000
+	./$(NAME) 2 5000 2000 3000
 
 norm:
 	norminette $(FIL) files/$(HEADER)

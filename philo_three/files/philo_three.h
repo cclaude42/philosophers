@@ -6,19 +6,18 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 10:24:11 by cclaude           #+#    #+#             */
-/*   Updated: 2020/04/08 15:42:07 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/04/08 16:29:45 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_THREE_H
 # define PHILO_THREE_H
 
-# include <stdlib.h>
-// # include <fcntl.h>
-// # include <string.h>
 # include <semaphore.h>
+# include <pthread.h>
 # include <sys/wait.h>
 # include <sys/time.h>
+# include <stdlib.h>
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdio.h>
@@ -27,22 +26,19 @@
 # define SLEEPING 2
 # define THINKING 3
 
-typedef struct	s_nb
+typedef struct	s_all
 {
-	int 	phi;
-    int 	eat;
-	int		meals;
 	sem_t	*forks;
-}				t_nb;
-
-typedef struct	s_t
-{
-    int		die;
-    int 	eat;
-    int 	sleep;
-	long	start;
-	long	last;
-}				t_t;
+	int 	nb_phi;
+    int		t_die;
+    int 	t_eat;
+    int 	t_sleep;
+	long	t_start;
+    int 	nb_eat;
+	long	last_meal;
+	int		meal_cnt;
+	int		who;
+}				t_all;
 
 int		arg_check(int ac, char **av);
 int		ft_atoi(char *str);
