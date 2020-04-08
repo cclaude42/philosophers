@@ -6,38 +6,11 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 10:49:07 by cclaude           #+#    #+#             */
-/*   Updated: 2020/04/08 11:59:09 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/04/08 23:46:02 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_three.h"
-
-size_t	ft_strlen(const char *s)
-{
-	size_t	len;
-
-	len = 0;
-	while (s[len] != '\0')
-		len++;
-	return (len);
-}
-
-int		ft_nbrlen(long n)
-{
-	int		size;
-
-	size = 0;
-	if (n == 0)
-		return (1);
-	if (n < 0)
-		size++;
-	while (n != 0)
-	{
-		n = n / 10;
-		size++;
-	}
-	return (size);
-}
 
 int     ft_atoi(char *str)
 {
@@ -58,6 +31,14 @@ int     ft_atoi(char *str)
     while (str[i] >= '0' && str[i] <= '9')
         num = num * 10 + (str[i++] - '0');
     return (num * sign);
+}
+
+long   ft_time()
+{
+    struct timeval  te;
+
+    gettimeofday(&te, NULL);
+    return (te.tv_sec * 1000 + te.tv_usec / 1000);
 }
 
 int     arg_check(int ac, char **av)

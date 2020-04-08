@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 10:23:07 by cclaude           #+#    #+#             */
-/*   Updated: 2020/04/08 23:38:44 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/04/08 23:48:19 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void    *meal_loop(void *ptr)
     i = 0;
     while (i < s->nb_phi)
         kill(s->pid[i++], SIGTERM);
+    free(s->pid);
     ft_message(s->t_start, 0, "Everyone has eaten enough !");
     sem_unlink("forks");
     sem_unlink("meals");
@@ -84,7 +85,8 @@ void    philo_three(t_all s)
     pthread_t   tid;
 
     i = 0;
-    s.pid = malloc(sizeof(pid_t) * s.nb_phi);
+    if (!(s.pid = malloc(sizeof(pid_t) * s.nb_phi)))
+        return ;
     while (i < s.nb_phi)
     {
         s.pid[i] = fork();
@@ -101,6 +103,7 @@ void    philo_three(t_all s)
     i = 0;
     while (i < s.nb_phi)
         kill(s.pid[i++], SIGTERM);
+    free(s.pid);
 }
 
 int     main(int ac, char **av)
@@ -119,8 +122,8 @@ int     main(int ac, char **av)
     s.meal_cnt = 0;
     sem_unlink("forks");
     sem_unlink("meals");
-    s.forks = sem_open("forks", O_CREAT, S_IRWXU, (unsigned int)(s.nb_phi / 2));
-    s.meals = sem_open("meals", O_CREAT, S_IRWXU, (unsigned int)0);
+    s.forks = sem_open("forks", O_CREAT, S_IRWXU, (s.nb_phi / 2));
+    s.meals = sem_open("meals", O_CREAT, S_IRWXU, 0);
     philo_three(s);
     sem_close(s.forks);
     sem_close(s.meals);

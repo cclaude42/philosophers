@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 10:24:11 by cclaude           #+#    #+#             */
-/*   Updated: 2020/04/08 23:21:50 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/04/08 23:46:47 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,8 @@ typedef struct	s_all
 	int		who;
 }				t_all;
 
-int		arg_check(int ac, char **av);
-int		ft_atoi(char *str);
-int		ft_nbrlen(long n);
-size_t	ft_strlen(const char *s);
-
 void	ft_message(long time, int who, char *what);
 long	ft_time();
+int     ft_atoi(char *str);
+int		arg_check(int ac, char **av);
 #endif

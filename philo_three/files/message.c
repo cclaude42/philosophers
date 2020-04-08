@@ -6,11 +6,38 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 11:34:50 by cclaude           #+#    #+#             */
-/*   Updated: 2020/04/08 23:38:21 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/04/08 23:47:50 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_three.h"
+
+size_t	ft_strlen(const char *s)
+{
+	size_t	len;
+
+	len = 0;
+	while (s[len] != '\0')
+		len++;
+	return (len);
+}
+
+int		ft_nbrlen(long n)
+{
+	int		size;
+
+	size = 0;
+	if (n == 0)
+		return (1);
+	if (n < 0)
+		size++;
+	while (n != 0)
+	{
+		n = n / 10;
+		size++;
+	}
+	return (size);
+}
 
 void        ft_charfill(char *buffer, char *str, int *i)
 {
@@ -41,14 +68,6 @@ void        ft_numfill(char *buffer, long nbr, int *i)
     }
 }
 
-long   ft_time()
-{
-    struct timeval  te;
-
-    gettimeofday(&te, NULL);
-    return (te.tv_sec * 1000 + te.tv_usec / 1000);
-}
-
 void        ft_message(long time, int who, char *what)
 {
     long    stamp;
@@ -56,10 +75,11 @@ void        ft_message(long time, int who, char *what)
     int     size;
     int     i;
 
-    i = 0;
     stamp = ft_time() - time;
     size = ft_nbrlen(stamp) + ft_nbrlen(who) + ft_strlen(what) + 5;
-    buffer = malloc(sizeof(char) * size);
+    if (!(buffer = malloc(sizeof(char) * size)))
+        return ;
+    i = 0;
     ft_numfill(buffer, stamp, &i);
     buffer[i++] = ' ';
     buffer[i++] = '#';
