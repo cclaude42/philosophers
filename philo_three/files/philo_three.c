@@ -6,23 +6,52 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 10:23:07 by cclaude           #+#    #+#             */
-/*   Updated: 2020/04/08 16:46:11 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/04/08 23:38:44 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_three.h"
 
-void    *death_loop(void *ptr)
+void    *meal_loop(void *ptr)
 {
-    t_all   *s;;
+    t_all   *s;
+    int     i;
 
     s = (t_all *)ptr;
+    i = 0;
+    while (i < s->nb_phi)
+    {
+        sem_wait(s->meals);
+        i++;
+    }
+    i = 0;
+    while (i < s->nb_phi)
+        kill(s->pid[i++], SIGTERM);
+    ft_message(s->t_start, 0, "Everyone has eaten enough !");
+    sem_unlink("forks");
+    sem_unlink("meals");
+    exit(0);
+    return (NULL);
+}
+
+void    *death_loop(void *ptr)
+{
+    t_all   *s;
+    int     check;
+
+    s = (t_all *)ptr;
+    check = 1;
     while (1)
     {
         if (ft_time() - s->last_meal > s->t_die)
         {
             ft_message(s->t_start, s->who, "has died");
-            // kill everything !
+            exit(0);
+        }
+        else if (s->meal_cnt >= s->nb_eat && check)
+        {
+            sem_post(s->meals);
+            check = 0;
         }
     }
     return (NULL);
@@ -39,9 +68,9 @@ void    philosopher(t_all s)
         ft_message(s.t_start, s.who, "has taken a fork");
         ft_message(s.t_start, s.who, "has taken a fork");
         s.last_meal = ft_time();
-        s.meal_cnt++;
         ft_message(s.t_start, s.who, "is eating");
         usleep(s.t_eat * 1000);
+        s.meal_cnt++;
         sem_post(s.forks);
         ft_message(s.t_start, s.who, "is sleeping");
         usleep(s.t_sleep * 1000);
@@ -51,12 +80,15 @@ void    philosopher(t_all s)
 
 void    philo_three(t_all s)
 {
-    int i;
+    int         i;
+    pthread_t   tid;
 
     i = 0;
+    s.pid = malloc(sizeof(pid_t) * s.nb_phi);
     while (i < s.nb_phi)
     {
-        if (fork() == 0)
+        s.pid[i] = fork();
+        if (s.pid[i] == 0)
         {
             s.who = i + 1;
             philosopher(s);
@@ -64,8 +96,11 @@ void    philo_three(t_all s)
         }
         i++;
     }
-    while ((waitpid(-1, NULL, 0)) != -1)
-        ;
+    pthread_create(&tid, NULL, meal_loop, &s);
+    waitpid(-1, NULL, 0);
+    i = 0;
+    while (i < s.nb_phi)
+        kill(s.pid[i++], SIGTERM);
 }
 
 int     main(int ac, char **av)
@@ -83,9 +118,13 @@ int     main(int ac, char **av)
     s.last_meal = s.t_start;
     s.meal_cnt = 0;
     sem_unlink("forks");
+    sem_unlink("meals");
     s.forks = sem_open("forks", O_CREAT, S_IRWXU, (unsigned int)(s.nb_phi / 2));
+    s.meals = sem_open("meals", O_CREAT, S_IRWXU, (unsigned int)0);
     philo_three(s);
     sem_close(s.forks);
+    sem_close(s.meals);
     sem_unlink("forks");
+    sem_unlink("meals");
     return (0);
 }

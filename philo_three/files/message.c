@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 11:34:50 by cclaude           #+#    #+#             */
-/*   Updated: 2020/04/08 15:23:48 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/04/08 23:38:21 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void        ft_message(long time, int who, char *what)
     buffer[i++] = '#';
     ft_numfill(buffer, who, &i);
     buffer[i++] = ' ';
+    if (who == 0)
+        i -= 3;
     ft_charfill(buffer, what, &i);
     buffer[i++] = '\n';
     write(1, buffer, size - 1);

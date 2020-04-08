@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 10:24:11 by cclaude           #+#    #+#             */
-/*   Updated: 2020/04/08 16:29:45 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/04/08 23:21:50 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <semaphore.h>
 # include <pthread.h>
+# include <signal.h>
 # include <sys/wait.h>
 # include <sys/time.h>
 # include <stdlib.h>
@@ -28,7 +29,9 @@
 
 typedef struct	s_all
 {
+	pid_t	*pid;
 	sem_t	*forks;
+	sem_t	*meals;
 	int 	nb_phi;
     int		t_die;
     int 	t_eat;
