@@ -6,23 +6,27 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 10:23:07 by cclaude           #+#    #+#             */
-/*   Updated: 2020/04/07 17:47:38 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/04/08 15:42:26 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_three.h"
 
-void philosopher(t_nb nb, t_t t, int which)
+void philosopher(t_nb nb, t_t t, int who)
 {
     while (1)
     {
         sem_wait(nb.forks);
-        printf("%d is eating\n", which);
+        ft_message(t.start, who, "has taken a fork");
+        ft_message(t.start, who, "has taken a fork");
+        t.last = ft_time();
+        nb.meals++;
+        ft_message(t.start, who, "is eating");
         usleep(t.eat * 1000);
         sem_post(nb.forks);
-        printf("%d is sleeping\n", which);
+        ft_message(t.start, who, "is sleeping");
         usleep(t.sleep * 1000);
-        printf("%d is thinking\n", which);
+        ft_message(t.start, who, "is thinking");
     }
 }
 
@@ -56,6 +60,10 @@ int main(int ac, char **av)
     t.eat = ft_atoi(av[3]);
     t.sleep = ft_atoi(av[4]);
     nb.eat = (ac == 6) ? ft_atoi(av[5]): -1;
+    nb.meals = 0;
+    t.start = ft_time();
+    t.last = 0;
+    sem_unlink("forks");
     nb.forks = sem_open("forks", O_CREAT, S_IRWXU, (unsigned int)(nb.phi / 2));
     philo_three(nb, t);
     sem_close(nb.forks);

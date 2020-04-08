@@ -9,6 +9,7 @@ THREADS = -lpthread
 HEADER = philo_three.h
 
 SRC = philo_three \
+	message \
 	tools \
 
 FIL = $(addsuffix .c, $(addprefix files/, $(SRC)))
@@ -40,9 +41,6 @@ re: fclean all
 
 test: re
 	./$(NAME) 2 10000 2000 3000
-
-best: re
-	./$(NAME) 2 10000 2000 3000 3
 
 norm:
 	norminette $(FIL) files/$(HEADER)

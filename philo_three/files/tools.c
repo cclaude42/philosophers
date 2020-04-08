@@ -6,13 +6,40 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 10:49:07 by cclaude           #+#    #+#             */
-/*   Updated: 2020/04/07 11:35:57 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/04/08 11:59:09 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_three.h"
 
-int ft_atoi(char *str)
+size_t	ft_strlen(const char *s)
+{
+	size_t	len;
+
+	len = 0;
+	while (s[len] != '\0')
+		len++;
+	return (len);
+}
+
+int		ft_nbrlen(long n)
+{
+	int		size;
+
+	size = 0;
+	if (n == 0)
+		return (1);
+	if (n < 0)
+		size++;
+	while (n != 0)
+	{
+		n = n / 10;
+		size++;
+	}
+	return (size);
+}
+
+int     ft_atoi(char *str)
 {
     int	i;
     int	sign;
@@ -33,7 +60,7 @@ int ft_atoi(char *str)
     return (num * sign);
 }
 
-int arg_check(int ac, char **av)
+int     arg_check(int ac, char **av)
 {
     int i;
     int j;
