@@ -5,18 +5,42 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/07 10:29:49 by cclaude           #+#    #+#             */
-/*   Updated: 2020/04/07 10:43:07 by cclaude          ###   ########.fr       */
+/*   Created: 2020/04/07 10:24:11 by cclaude           #+#    #+#             */
+/*   Updated: 2020/04/09 15:16:36 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_TWO_H
 # define PHILO_TWO_H
 
-// # include <stdlib.h>
-// # include <fcntl.h>
-// # include <string.h>
+# include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
+# include <fcntl.h>
 
+# include <semaphore.h>
+# include <pthread.h>
+# include <signal.h>
+# include <sys/wait.h>
+# include <sys/time.h>
+
+typedef struct	s_all
+{
+	sem_t	*forks;
+	sem_t	*meals;
+	int		nb_phi;
+	int		t_die;
+	int		t_eat;
+	int		t_sleep;
+	long	t_start;
+	int		nb_eat;
+	long	last_meal;
+	int		meal_cnt;
+	int		who;
+}				t_all;
+
+int				arg_check(int ac, char **av);
+void			ft_message(long time, int who, char *what);
+long			ft_time(void);
+int				ft_atoi(char *str);
 #endif

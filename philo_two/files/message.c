@@ -6,11 +6,11 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 11:34:50 by cclaude           #+#    #+#             */
-/*   Updated: 2020/04/09 11:33:51 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/04/09 11:49:20 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_three.h"
+#include "philo_two.h"
 
 size_t	ft_strlen(const char *s)
 {

@@ -4,9 +4,13 @@ CC = clang
 
 CFLAGS = -Wall -Wextra -Werror
 
+THREADS = -lpthread
+
 HEADER = philo_two.h
 
 SRC = philo_two \
+	message \
+	tools \
 
 FIL = $(addsuffix .c, $(addprefix files/, $(SRC)))
 
@@ -20,7 +24,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@echo "\n\033[0;33mCompiling..."
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJ)
+	$(CC) $(CFLAGS) $(THREADS) -o $(NAME) $(OBJ)
 	@echo "\033[0m"
 
 clean:

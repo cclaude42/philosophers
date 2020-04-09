@@ -6,11 +6,11 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 10:49:07 by cclaude           #+#    #+#             */
-/*   Updated: 2020/04/09 11:35:13 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/04/09 11:49:15 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_three.h"
+#include "philo_two.h"
 
 int		ft_atoi(char *str)
 {
