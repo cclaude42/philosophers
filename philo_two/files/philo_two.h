@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 10:24:11 by cclaude           #+#    #+#             */
-/*   Updated: 2020/04/09 15:16:36 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/04/09 15:54:18 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct	s_all
 {
 	sem_t	*forks;
 	sem_t	*meals;
+	sem_t	*death;
 	int		nb_phi;
 	int		t_die;
 	int		t_eat;
