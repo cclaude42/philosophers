@@ -1,4 +1,4 @@
-NAME = philo_three
+NAME = philo_one
 
 CC = clang
 
@@ -6,9 +6,9 @@ CFLAGS = -Wall -Wextra -Werror
 
 THREADS = -lpthread
 
-HEADER = philo_three.h
+HEADER = philo_one.h
 
-SRC = philo_three \
+SRC = philo_one \
 	message \
 	tools \
 
