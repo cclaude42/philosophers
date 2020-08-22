@@ -6,11 +6,20 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 10:49:07 by cclaude           #+#    #+#             */
-/*   Updated: 2020/04/09 16:50:22 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/22 20:34:07 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_one.h"
+
+int		evens(int i, int nb)
+{
+	if (i >= nb / 2)
+		i = 2 * i + 1 - nb;
+	else
+		i = 2 * i;
+	return (i);
+}
 
 int		ft_atoi(char *str)
 {

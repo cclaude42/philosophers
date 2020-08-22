@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 10:23:07 by cclaude           #+#    #+#             */
-/*   Updated: 2020/04/09 19:39:04 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/22 20:56:50 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,18 +63,19 @@ void	*philosopher(void *ptr)
 
 	s = (t_all *)ptr;
 	pthread_create(&tid, NULL, death_loop, s);
+	s->who % 2 ? 0 : usleep(s->t_eat * 900);
 	while (1)
 	{
 		pthread_mutex_lock(&s->fork);
-		pthread_mutex_lock(s->next);
 		ft_message(s->t_start, s->who, "has taken a fork");
+		pthread_mutex_lock(s->prev);
 		ft_message(s->t_start, s->who, "has taken a fork");
 		s->last_meal = ft_time();
 		ft_message(s->t_start, s->who, "is eating");
 		usleep(s->t_eat * 1000);
-		s->meal_cnt++;
 		pthread_mutex_unlock(&s->fork);
-		pthread_mutex_unlock(s->next);
+		pthread_mutex_unlock(s->prev);
+		s->meal_cnt++;
 		ft_message(s->t_start, s->who, "is sleeping");
 		usleep(s->t_sleep * 1000);
 		ft_message(s->t_start, s->who, "is thinking");
@@ -89,7 +90,7 @@ void	philo_one(t_all *s)
 	pthread_t		tid;
 	int				i;
 
-	s[0].next = &s[s[0].nb_phi - 1].fork;
+	s[0].prev = &s[s[0].nb_phi - 1].fork;
 	pthread_mutex_init(&state, NULL);
 	pthread_mutex_init(&meals, NULL);
 	pthread_mutex_lock(&state);
@@ -98,6 +99,7 @@ void	philo_one(t_all *s)
 	{
 		s[i].state = &state;
 		s[i].meals = &meals;
+		// pthread_create(&tid, NULL, philosopher, &s[evens(i++, s[0].nb_phi)]);
 		pthread_create(&tid, NULL, philosopher, &s[i++]);
 	}
 	if (s[0].nb_eat > -1)
@@ -124,7 +126,7 @@ int		main(int ac, char **av)
 	while (i < ft_atoi(av[1]))
 	{
 		pthread_mutex_init(&s[i].fork, NULL);
-		s[i].next = (i != 0) ? &s[i - 1].fork : NULL;
+		s[i].prev = (i != 0) ? &s[i - 1].fork : NULL;
 		s[i].nb_phi = ft_atoi(av[1]);
 		s[i].t_die = ft_atoi(av[2]);
 		s[i].t_eat = ft_atoi(av[3]);

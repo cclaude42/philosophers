@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 10:24:11 by cclaude           #+#    #+#             */
-/*   Updated: 2020/04/09 19:41:29 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/08/22 20:33:54 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct		s_all
 	pthread_mutex_t	fork;
 	pthread_mutex_t	*state;
 	pthread_mutex_t	*meals;
-	pthread_mutex_t	*next;
+	pthread_mutex_t	*prev;
 	int				nb_phi;
 	int				t_die;
 	int				t_eat;
@@ -45,4 +45,5 @@ int					arg_check(int ac, char **av);
 void				ft_message(long time, int who, char *what);
 long				ft_time(void);
 int					ft_atoi(char *str);
+int					evens(int i, int nb);
 #endif
