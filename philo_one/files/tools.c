@@ -6,20 +6,11 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 10:49:07 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/22 20:34:07 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/09/02 14:11:15 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_one.h"
-
-int		evens(int i, int nb)
-{
-	if (i >= nb / 2)
-		i = 2 * i + 1 - nb;
-	else
-		i = 2 * i;
-	return (i);
-}
 
 int		ft_atoi(char *str)
 {
@@ -48,6 +39,12 @@ long	ft_time(void)
 
 	gettimeofday(&te, NULL);
 	return (te.tv_sec * 1000 + te.tv_usec / 1000);
+}
+
+void	ft_usleep(long time, int length)
+{
+	while (ft_time() < time + length)
+		usleep(length);
 }
 
 int		arg_check(int ac, char **av)

@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 10:23:07 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/22 20:56:50 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/09/02 15:24:56 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	*philosopher(void *ptr)
 
 	s = (t_all *)ptr;
 	pthread_create(&tid, NULL, death_loop, s);
-	s->who % 2 ? 0 : usleep(s->t_eat * 900);
+	s->who % 2 ? 0 : ft_usleep(ft_time(), s->t_eat);
 	while (1)
 	{
 		pthread_mutex_lock(&s->fork);
@@ -72,12 +72,12 @@ void	*philosopher(void *ptr)
 		ft_message(s->t_start, s->who, "has taken a fork");
 		s->last_meal = ft_time();
 		ft_message(s->t_start, s->who, "is eating");
-		usleep(s->t_eat * 1000);
+		ft_usleep(ft_time(), s->t_eat);
 		pthread_mutex_unlock(&s->fork);
 		pthread_mutex_unlock(s->prev);
 		s->meal_cnt++;
 		ft_message(s->t_start, s->who, "is sleeping");
-		usleep(s->t_sleep * 1000);
+		ft_usleep(ft_time(), s->t_sleep);
 		ft_message(s->t_start, s->who, "is thinking");
 	}
 	return (NULL);
@@ -99,7 +99,6 @@ void	philo_one(t_all *s)
 	{
 		s[i].state = &state;
 		s[i].meals = &meals;
-		// pthread_create(&tid, NULL, philosopher, &s[evens(i++, s[0].nb_phi)]);
 		pthread_create(&tid, NULL, philosopher, &s[i++]);
 	}
 	if (s[0].nb_eat > -1)

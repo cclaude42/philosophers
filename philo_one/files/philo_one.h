@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 10:24:11 by cclaude           #+#    #+#             */
-/*   Updated: 2020/08/22 20:33:54 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/09/02 14:11:19 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,6 @@ typedef struct		s_all
 int					arg_check(int ac, char **av);
 void				ft_message(long time, int who, char *what);
 long				ft_time(void);
+void				ft_usleep(long time, int length);
 int					ft_atoi(char *str);
-int					evens(int i, int nb);
 #endif

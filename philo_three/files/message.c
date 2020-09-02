@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 11:34:50 by cclaude           #+#    #+#             */
-/*   Updated: 2020/04/09 11:33:51 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/09/02 15:18:17 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,15 +70,13 @@ void	ft_numfill(char *buffer, long nbr, int *i)
 
 void	ft_message(long time, int who, char *what)
 {
+	char	buffer[50];
 	long	stamp;
-	char	*buffer;
 	int		size;
 	int		i;
 
 	stamp = ft_time() - time;
-	size = ft_nbrlen(stamp) + ft_nbrlen(who) + ft_strlen(what) + 5;
-	if (!(buffer = malloc(sizeof(char) * size)))
-		return ;
+	size = ft_nbrlen(stamp) + ft_nbrlen(who) + ft_strlen(what) + 4;
 	i = 0;
 	ft_numfill(buffer, stamp, &i);
 	buffer[i++] = ' ';
@@ -89,6 +87,6 @@ void	ft_message(long time, int who, char *what)
 		i -= 3;
 	ft_charfill(buffer, what, &i);
 	buffer[i++] = '\n';
-	write(1, buffer, size - 1);
-	free(buffer);
+	buffer[i++] = '\0';
+	write(1, buffer, size);
 }
