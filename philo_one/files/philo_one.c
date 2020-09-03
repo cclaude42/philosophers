@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 10:23:07 by cclaude           #+#    #+#             */
-/*   Updated: 2020/09/02 15:24:56 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/09/03 15:54:24 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@ void	*meal_loop(void *ptr)
 
 	s = (t_all *)ptr;
 	i = 0;
-	pthread_mutex_lock(s->meals);
-	while (i < s->nb_phi)
+	if (s->nb_eat != 0)
+		pthread_mutex_lock(s->meals);
+	while (s->nb_eat != 0 && i < s->nb_phi)
 	{
 		pthread_mutex_lock(s->meals);
 		i++;
@@ -33,22 +34,21 @@ void	*meal_loop(void *ptr)
 void	*death_loop(void *ptr)
 {
 	t_all	*s;
-	int		alive;
 	int		hungry;
 
 	s = (t_all *)ptr;
-	alive = 1;
 	hungry = 1;
 	while (1)
 	{
-		if (ft_time() - s->last_meal > s->t_die && alive)
+		if (ft_time() - s->last_meal > s->t_die)
 		{
 			ft_message(s->t_start, s->who, "has died");
 			pthread_mutex_unlock(s->state);
-			alive = 0;
+			return (NULL);
 		}
 		else if (s->meal_cnt >= s->nb_eat && hungry)
 		{
+			ft_usleep(ft_time(), (float)s->who / 4);
 			pthread_mutex_unlock(s->meals);
 			hungry = 0;
 		}
@@ -63,8 +63,8 @@ void	*philosopher(void *ptr)
 
 	s = (t_all *)ptr;
 	pthread_create(&tid, NULL, death_loop, s);
-	s->who % 2 ? 0 : ft_usleep(ft_time(), s->t_eat);
-	while (1)
+	s->who % 2 ? 0 : ft_usleep(ft_time(), (float)s->t_eat * 0.9);
+	while (s->nb_eat == -1 || s->nb_eat > s->meal_cnt)
 	{
 		pthread_mutex_lock(&s->fork);
 		ft_message(s->t_start, s->who, "has taken a fork");

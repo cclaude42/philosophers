@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/08 11:34:50 by cclaude           #+#    #+#             */
-/*   Updated: 2020/09/02 15:18:07 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/09/03 15:25:14 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,15 @@ void	ft_numfill(char *buffer, long nbr, int *i)
 	}
 }
 
-void	ft_message(long time, int who, char *what)
+void	ft_message(int run, long time, int who, char *what)
 {
 	char	buffer[50];
 	long	stamp;
 	int		size;
 	int		i;
 
+	if (run == 0)
+		return ;
 	stamp = ft_time() - time;
 	size = ft_nbrlen(stamp) + ft_nbrlen(who) + ft_strlen(what) + 4;
 	i = 0;
