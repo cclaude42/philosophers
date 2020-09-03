@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 10:23:07 by cclaude           #+#    #+#             */
-/*   Updated: 2020/09/02 14:08:40 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/09/03 18:37:56 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ void	*meal_loop(void *ptr)
 		i++;
 	}
 	i = 0;
+	ft_message(s->t_start, 0, "Everyone has eaten enough !");
 	while (i < s->nb_phi)
 		kill(s->pid[i++], SIGTERM);
 	free(s->pid);
-	ft_message(s->t_start, 0, "Everyone has eaten enough !");
 	sem_unlink("forks");
 	sem_unlink("meals");
 	exit(0);
