@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 10:49:07 by cclaude           #+#    #+#             */
-/*   Updated: 2020/09/02 14:06:28 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/09/09 18:04:28 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,11 @@ long	ft_time(void)
 	return (te.tv_sec * 1000 + te.tv_usec / 1000);
 }
 
-void	ft_usleep(long time, int length)
+void	ft_usleep(int length)
 {
+	long	time;
+
+	time = ft_time();
 	while (ft_time() < time + length)
 		usleep(length);
 }

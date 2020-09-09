@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 10:23:07 by cclaude           #+#    #+#             */
-/*   Updated: 2020/09/03 18:37:56 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/09/09 18:25:19 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	*death_loop(void *ptr)
 		{
 			sem_post(s->meals);
 			check = 0;
+			return (NULL);
 		}
 	}
 	return (NULL);
@@ -70,11 +71,11 @@ void	philosopher(t_all s)
 		ft_message(s.t_start, s.who, "has taken a fork");
 		s.last_meal = ft_time();
 		ft_message(s.t_start, s.who, "is eating");
-		ft_usleep(ft_time(), s.t_eat);
+		ft_usleep(s.t_eat);
 		s.meal_cnt++;
 		sem_post(s.forks);
 		ft_message(s.t_start, s.who, "is sleeping");
-		ft_usleep(ft_time(), s.t_sleep);
+		ft_usleep(s.t_sleep);
 		ft_message(s.t_start, s.who, "is thinking");
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 10:23:07 by cclaude           #+#    #+#             */
-/*   Updated: 2020/09/03 15:54:24 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/09/09 18:38:57 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,10 @@ void	*death_loop(void *ptr)
 		}
 		else if (s->meal_cnt >= s->nb_eat && hungry)
 		{
-			ft_usleep(ft_time(), (float)s->who / 4);
+			ft_usleep((float)s->who);
 			pthread_mutex_unlock(s->meals);
 			hungry = 0;
+			return (NULL);
 		}
 	}
 	return (NULL);
@@ -63,7 +64,7 @@ void	*philosopher(void *ptr)
 
 	s = (t_all *)ptr;
 	pthread_create(&tid, NULL, death_loop, s);
-	s->who % 2 ? 0 : ft_usleep(ft_time(), (float)s->t_eat * 0.9);
+	s->who % 2 ? 0 : ft_usleep((float)s->t_eat * 0.9);
 	while (s->nb_eat == -1 || s->nb_eat > s->meal_cnt)
 	{
 		pthread_mutex_lock(&s->fork);
@@ -72,12 +73,12 @@ void	*philosopher(void *ptr)
 		ft_message(s->t_start, s->who, "has taken a fork");
 		s->last_meal = ft_time();
 		ft_message(s->t_start, s->who, "is eating");
-		ft_usleep(ft_time(), s->t_eat);
+		ft_usleep(s->t_eat);
 		pthread_mutex_unlock(&s->fork);
 		pthread_mutex_unlock(s->prev);
 		s->meal_cnt++;
 		ft_message(s->t_start, s->who, "is sleeping");
-		ft_usleep(ft_time(), s->t_sleep);
+		ft_usleep(s->t_sleep);
 		ft_message(s->t_start, s->who, "is thinking");
 	}
 	return (NULL);

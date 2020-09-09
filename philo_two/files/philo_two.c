@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 10:23:07 by cclaude           #+#    #+#             */
-/*   Updated: 2020/09/03 16:42:45 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/09/09 18:20:47 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,14 @@ void	*death_loop(void *ptr)
 			ft_message(1, s->t_start, s->who, "has died");
 			sem_post(s->death);
 			alive = 0;
+			return (NULL);
 		}
 		else if (s->meal_cnt >= s->nb_eat && hungry)
 		{
-			ft_usleep(ft_time(), s->who);
+			ft_usleep(s->who);
 			sem_post(s->meals);
 			hungry = 0;
+			return (NULL);
 		}
 	}
 	return (NULL);
@@ -74,11 +76,11 @@ void	*philosopher(void *ptr)
 		ft_message(*s->run, s->t_start, s->who, "has taken a fork");
 		s->last_meal = ft_time();
 		ft_message(*s->run, s->t_start, s->who, "is eating");
-		ft_usleep(ft_time(), s->t_eat);
+		ft_usleep(s->t_eat);
 		s->meal_cnt++;
 		sem_post(s->forks);
 		ft_message(*s->run, s->t_start, s->who, "is sleeping");
-		ft_usleep(ft_time(), s->t_sleep);
+		ft_usleep(s->t_sleep);
 		ft_message(*s->run, s->t_start, s->who, "is thinking");
 	}
 	return (NULL);
@@ -110,7 +112,7 @@ void	philo_two(t_all *s, char **av)
 	if (s[0].nb_eat > -1)
 		pthread_create(&tid, NULL, meal_loop, &s[0]);
 	sem_wait(s[0].death);
-	ft_usleep(ft_time(), s[0].t_eat + s[0].t_sleep);
+	ft_usleep(s[0].t_eat + s[0].t_sleep);
 }
 
 int		main(int ac, char **av)
