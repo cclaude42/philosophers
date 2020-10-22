@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 10:23:07 by cclaude           #+#    #+#             */
-/*   Updated: 2020/09/09 18:38:57 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/10/22 15:47:26 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	*death_loop(void *ptr)
 			pthread_mutex_unlock(s->state);
 			return (NULL);
 		}
-		else if (s->meal_cnt >= s->nb_eat && hungry)
+		else if (s->nb_eat != -1 && s->meal_cnt >= s->nb_eat && hungry)
 		{
 			ft_usleep((float)s->who);
 			pthread_mutex_unlock(s->meals);
@@ -64,7 +64,7 @@ void	*philosopher(void *ptr)
 
 	s = (t_all *)ptr;
 	pthread_create(&tid, NULL, death_loop, s);
-	s->who % 2 ? 0 : ft_usleep((float)s->t_eat * 0.9);
+	s->who % 2 ? 0 : ft_usleep((float)s->t_eat * 0.9 + 1);
 	while (s->nb_eat == -1 || s->nb_eat > s->meal_cnt)
 	{
 		pthread_mutex_lock(&s->fork);

@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 10:23:07 by cclaude           #+#    #+#             */
-/*   Updated: 2020/09/09 18:25:19 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/10/22 12:17:27 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	*death_loop(void *ptr)
 			ft_message(s->t_start, s->who, "has died");
 			exit(0);
 		}
-		else if (s->meal_cnt >= s->nb_eat && check)
+		else if (s->nb_eat != -1 && s->meal_cnt >= s->nb_eat && check)
 		{
 			sem_post(s->meals);
 			check = 0;
