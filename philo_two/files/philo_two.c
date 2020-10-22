@@ -6,7 +6,7 @@
 /*   By: cclaude <cclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/07 10:23:07 by cclaude           #+#    #+#             */
-/*   Updated: 2020/10/22 12:17:49 by cclaude          ###   ########.fr       */
+/*   Updated: 2020/10/22 16:28:15 by cclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,27 +33,21 @@ void	*meal_loop(void *ptr)
 void	*death_loop(void *ptr)
 {
 	t_all	*s;
-	int		alive;
-	int		hungry;
 
 	s = (t_all *)ptr;
-	alive = 1;
-	hungry = 1;
 	while (*s->run)
 	{
-		if (ft_time() - s->last_meal > s->t_die && alive)
+		if (ft_time() - s->last_meal > s->t_die)
 		{
 			*s->run = 0;
 			ft_message(1, s->t_start, s->who, "has died");
 			sem_post(s->death);
-			alive = 0;
 			return (NULL);
 		}
-		else if (s->nb_eat != -1 && s->meal_cnt >= s->nb_eat && hungry)
+		else if (s->nb_eat != -1 && s->meal_cnt >= s->nb_eat)
 		{
 			ft_usleep(s->who);
 			sem_post(s->meals);
-			hungry = 0;
 			return (NULL);
 		}
 	}
