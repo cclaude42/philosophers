@@ -2,10 +2,6 @@
 
 42 project about inter-process communication. A program that can monitor multiple instances of itself, either processes or threads, using semaphores or mutexes.
 
-<p align="center">
-  <img src="https://i.imgur.com/OFhqnqw.png" width="100%" />
-</p>
-
 ## Final grade : 100/100
 
 Mandatory part : 100/100
@@ -23,6 +19,10 @@ Of course, if they borrow a neighbor's fork, the neighbor can't use the fork. Th
 **philo_two** uses **threads** as well, but uses **semaphores** as forks instead.
 
 **philo_three** forks itself, making philosophers **processes**. Its forks are **semaphores**. It uses threads too, but only for monitoring.
+
+<p align="center">
+  <img src="https://i.imgur.com/OFhqnqw.png" width="100%" />
+</p>
 
 ### How to use it
 
